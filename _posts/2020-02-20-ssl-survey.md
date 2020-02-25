@@ -89,18 +89,18 @@ image: images/ssl-survey/ssl_yann.jpg
 ### Contrastive Predictive Coding
 
 第一篇文章是 [Representation Learning with Contrastive Predictive Coding](https://arxiv.org/abs/1807.03748)。
-这篇文章主要是通过 contrastive 的方式在 speech, images, text 和 在reinforcement learning 中都取得了很好的效果。
+这篇文章主要是通过 contrastive 的方式在 speech, images, text 和 reinforcement learning 中都取得了很好的效果。
 
 从前面我们知道，由一个原始的 input 去建模一个 high-level representation 是很难的，这也是自监督学习想做的事情。
-其中常用的策略是：future，missing 和 contextual，即预测未来的信息，比如 video 中当前帧预测后面的帧；丢失的信息或者是上下文的信息，比如 NLP 里面的 word2vec 和 BERT。
+其中常用的策略是: future，missing 和 contextual，即预测未来的信息，比如 video 中当前帧预测后面的帧；丢失的信息或者是上下文的信息，比如 NLP 里面的 word2vec 和 BERT。
 
-对于一个目标 x 和他的上下文 c 来说，直接去建模输出 p(x|c) 会损失很多信息，将 target x 和 context c 更合适的建模方式是最大化他们之间的 mutual information，即下面的公式
+对于一个目标 x 和他的上下文 c 来说，直接去建模输出 $p(x\|c)$ 会损失很多信息，将 target x 和 context c 更合适的建模方式是最大化他们之间的 mutual information，即下面的公式
 
 $$
-I(x ; c)=\sum_{x, c} p(x, c) \log \frac{p(x | c)}{p(x)}
+I(x; c)=\sum_{x, c} p(x, c) \log \frac{p(x | c)}{p(x)}
 $$
 
-优化了他们之间的互信息，即最大化 $\frac{p(x | c)}{p(x)}$，说明 $p(x|c)$ 要远大于 $p(x)$，即在给定 context c 的情况下， 要找到专属于 c 的那个 x，而不是随机采样的 x。
+优化了他们之间的互信息，即最大化 $\frac{p(x \| c)}{p(x)}$，说明 $p(x\|c)$ 要远大于 $p(x)$，即在给定 context c 的情况下， 要找到专属于 c 的那个 x，而不是随机采样的 x。
 
 基于这个观察，论文对 density ratio 进行建模，这样可以保留他们之间的互信息
 
