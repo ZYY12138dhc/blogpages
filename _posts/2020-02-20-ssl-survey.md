@@ -1,8 +1,7 @@
 ---
 toc: true
 layout: post
-categories: [paper]
-lang: zh
+categories: [summary, ssl]
 ---
 
 # Self-Supervised Learning 入门介绍
@@ -12,7 +11,7 @@ lang: zh
 最近 self-supervised learning 变得非常火，首先是 kaiming 的 MoCo 引发一波热议，然后最近 Yann 在 AAAI 上讲 self-supervised learning 是未来。
 所以觉得有必要了解一下 SSL，也看了一些 paper 和 blog，最后决定写这篇文章作为一个总结。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_yann.jpg "Yann in AAAI")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_yann.jpg "Yann in AAAI")
 
 ## 什么是 Self-Supervised Learning 
 
@@ -30,7 +29,7 @@ lang: zh
 主要是以 AutoEncoder 为代表，以及后面的变形，比如 VAE 等等。
 对编码器的基本要求就是尽可能保留原始数据的重要信息，所以如果能通过 decoder 解码回原始图片，则说明 latent code 重建的足够好了。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_autoencoder.png "source: [Towards Data Science](https://towardsdatascience.com/generating-images-with-autoencoders-77fd3a8dd368)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_autoencoder.png "source: https://towardsdatascience.com/generating-images-with-autoencoders-77fd3a8dd368")
 
 
 这种直接在 pixel level 上计算 loss 是一种很直观的做法，除了这种直接的做法外，还有生成对抗网络的方法，通过判别网络来算 loss。
@@ -45,7 +44,7 @@ lang: zh
 但是如果你要我画一张一模一样的人民币的图片，我肯定没法画出来。
 通过这个例子可以明显看出，要提取一个好的特征表达的充分条件是能够重建，但是并不是必要条件，所以有了下面这一类方法。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_dollar.jpg "dollar examples")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_dollar.jpg "dollar examples")
 
 ### Contrasive self-supervised learning
 
@@ -59,7 +58,7 @@ lang: zh
 
 下面是这两类方法的总结图片。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_methods.png "source: [blog](https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_methods.png "source: https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html")
 
 ## 为什么需要 self-supervised learning
 
@@ -137,31 +136,31 @@ $$
 对于语音和文本，可以充分利用了不同的 k 时间步长，来采集正样本，而负样本可以从序列随机取样来得到。
 对于图像任务，可以使用 pixelCNN 的方式将其转化成一个序列类型，用前几个 patch 作为输入，预测下一个 patch。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_cpc.png "source: [blog](https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_cpc.png "source: https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html")
 
-![]({{ site.baseurl }}/ssl-survey/ssl_cpc_img.png "source: [Representation Learning with Contrastive Predictive Coding](https://arxiv.org/abs/1807.03748)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_cpc_img.png "source: [Representation Learning with Contrastive Predictive Coding](https://arxiv.org/abs/1807.03748)")
 
 ### Deep InfoMax
 
 通过上面的分析和推导，我们有了这样一个通用的框架，那么 deep infomax 这篇文章就非常好理解了，其中正样本就是第 i 张图片的 global feature 和中间 feature map 上个的 local feature，而负样本就是另外一张图片作为输入，非常好理解。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_deepinfomax.png "source: [Learning deep representations by mutual information estimation and maximization](https://arxiv.org/abs/1808.06670)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_deepinfomax.png "source: https://arxiv.org/abs/1808.06670")
 
 ### Contrastive MultiView Coding 
 
 除了像上面这样去构建正负样本，还可以通过多模态的信息去构造，比如同一张图片的 RGB图 和 深度图。
 CMC 这篇 paper 就是从这一点出发去选择正样本，而且通过这个方式，每个 anchor 不仅仅只有一个正样本，可以通过多模态得到多个正样本，如下图右边所示。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_cmc.png "source: [Contrastive Multiview Coding](http://arxiv.org/abs/1906.05849)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_cmc.png "source: http://arxiv.org/abs/1906.05849")
 
 现在我们能够拿到很多正样本，问题是怎么获得大量的负样本，对于 contrastive loss 而言，如何 sample 到很多负样本是关键，mini-batch 里面的负样本太少了，而每次对图片重新提取特征又非常的慢。虽然可以通过 memory bank 将负样本都存下来，但是效果并不好，所以如何节省内存和空间获得大量的负样本仍然没有很好地解决。
 
 ### MoCo
 
-有了上面这么多工作的铺垫，其实 contrastive ssl 的大框架已经形成了，MoCo 这篇文章也变得很好理解，可以把 target x 看成第 i 张图片的随机 crop，他的正样本通过一个 model ema 来得到，可以理解为过去 epochs 对这张图片的 smooth aggregation。
+有了上面这么多工作的铺垫，其实 contrastive SSL 的大框架已经形成了，MoCo 这篇文章也变得很好理解，可以把 target x 看成第 i 张图片的随机 crop，他的正样本通过一个 model ema 来得到，可以理解为过去 epochs 对这张图片的 smooth aggregation。
 而负样本则从 memory bank 里面拿，同时 memory bank 的 feature 也是通过 model ema 得到，并且通过队列的形式丢掉老的 feature。
 
-![]({{ site.baseurl }}/ssl-survey/ssl_moco.jpg "source: [Momentum Contrast for Unsupervised Visual Representation Learning](https://arxiv.org/abs/1911.05722)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_moco.jpg "source: https://arxiv.org/abs/1911.05722")
 
 MoCo 通过工程的方式，和一些 trick，比如 model ema 和 shuffleBN 来解决之前没法很好 sample 负样本的问题。
 
@@ -174,7 +173,7 @@ MoCo 通过工程的方式，和一些 trick，比如 model ema 和 shuffleBN �
 
 ## Results
 
-![]({{ site.baseurl }}/ssl-survey/ssl_ret.jpg "source: [A Simple Framework for Contrastive Learning of Visual Representations](https://arxiv.org/abs/2002.05709)")
+![]({{ site.baseurl }}/images/ssl-survey/ssl_ret.jpg "source: https://arxiv.org/abs/2002.05709")
 
 最后展示了不同方法的结果，可以看到在性能其实已经逼近监督学习的效果，但是需要 train 4x 的时间，同时网络参数也比较大。
 
