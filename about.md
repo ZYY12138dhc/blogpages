@@ -4,10 +4,12 @@ title: About Me
 permalink: /about/
 ---
 
-This is where you put the contents of your *About* page. Like all your pages, it's in [Markdown](https://guides.github.com/features/mastering-markdown/) format.
+Currently, Xingyu is working as the Researcher Engineer in JD AI Lab.
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
+Before that, Xingyu received his M.Sc.'s degree
+in USTC (University of Science and Technology of China).
 
+## Research Interests
 
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+Xingyu's current research interests mainly include machine learning, computer vision,
+especially on deep learning, visual recognition and person re-identification.
