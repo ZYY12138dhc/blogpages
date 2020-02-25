@@ -1,7 +1,10 @@
 ---
 toc: true
-layout: post
+summary: "SSL 的入门介绍和几篇 paper 解读"
+branch: master
+comments: true
 categories: [summary, ssl]
+image: images/ssl-survey/ssl_yann.jpg
 ---
 
 # Self-Supervised Learning 入门介绍
@@ -184,3 +187,4 @@ MoCo 通过工程的方式，和一些 trick，比如 model ema 和 shuffleBN �
 [contrastive self-supervised learning](https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html)
 
 [deep infomax 和 深度学习中的互信息](https://zhuanlan.zhihu.com/p/46524857)
+
